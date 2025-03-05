@@ -5,13 +5,12 @@ import org.example.premier_projet_spring.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin
 @RestController
 public class ProductController {
 
@@ -39,6 +38,39 @@ public class ProductController {
     @GetMapping("/products")
     public List<Product> getAll() {
         return productDao.findAll();
+    }
+
+    @PostMapping("/product")
+    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+        productDao.save(product);
+        return new ResponseEntity<>(product, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("product/{id}")
+    public ResponseEntity<Product> deleteProduct(@PathVariable Long id) {
+
+        Optional<Product> optionalProduct = productDao.findById(id);
+        if (optionalProduct.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        productDao.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    //Put change tout l'objet
+    @PutMapping("/product/{id}")
+    // Patch change une partie de l'objet
+//    @PatchMapping("/product/{id}")
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {
+        Optional<Product> optionalProduct = productDao.findById(id);
+        if (optionalProduct.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        product.setId(id);
+        productDao.save(product);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
