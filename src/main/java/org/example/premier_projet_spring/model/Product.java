@@ -1,9 +1,7 @@
 package org.example.premier_projet_spring.model;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +11,8 @@ import lombok.Setter;
 public class Product {
 
     @Id
-    protected Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
 
     @Column(nullable = false)
     protected String name;
@@ -24,6 +23,9 @@ public class Product {
     @Column(columnDefinition = "TEXT")
     protected String description;
     protected float price;
+    
+    @ManyToOne
+    protected State state;
 
 
 }
