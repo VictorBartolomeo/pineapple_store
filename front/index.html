@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Spring CRUD Application</h1>
+
+<ul id="myList">
+
+</ul>
+
+<form action="" onsubmit="return onNewProduct()">
+    <label for="name-field">Name</label>
+    <input id="name-field">
+    <label for="code-field">Code</label>
+    <input id="code-field">
+    <label for="description-field">Description</label>
+    <textarea id="description-field"></textarea>
+    <label for="price-field">Price</label>
+    <input id="price-field">
+    <input type="submit" value="Submit">
+</form>
+
+</body>
+
+<script>
+    console.log("START")
+
+    function onNewProduct() {
+        const product = {
+            name: document.getElementById('name-field').value,
+            code: document.getElementById('code-field').value,
+            description: document.getElementById('description-field').value,
+            price: document.getElementById('price-field').value
+        }
+
+        const jsonProduct = JSON.stringify(product);
+
+        fetch("http://localhost:8080/product", {
+            method: 'POST',
+            body: jsonProduct,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => console.log("On est là"))
+
+        return false
+    }
+
+    fetch("http://localhost:8080/products")
+        .then(response => response.json())
+        .then(productList => {
+            const myList = document.getElementById("myList")
+
+            for (let product of productList) {
+                const listElement = document.createElement("li")
+                listElement.innerHTML = "Product : " + product.name + "| " + product.code + "| " + product.description + "| Price : " + product.price
+                myList.appendChild(listElement);
+            }
+        })
+
+    console.log("END")
+</script>
+</html>
