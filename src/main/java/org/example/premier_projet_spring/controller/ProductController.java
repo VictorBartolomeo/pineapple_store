@@ -1,5 +1,6 @@
 package org.example.premier_projet_spring.controller;
 
+import jakarta.validation.Valid;
 import org.example.premier_projet_spring.dao.ProductDao;
 import org.example.premier_projet_spring.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class ProductController {
     }
 
     @PostMapping("/product")
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+    public ResponseEntity<Product> createProduct(@RequestBody @Valid Product product) {
         productDao.save(product);
         return new ResponseEntity<>(product, HttpStatus.CREATED);
     }
@@ -62,7 +63,7 @@ public class ProductController {
     @PutMapping("/product/{id}")
     // Patch change une partie de l'objet
 //    @PatchMapping("/product/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product) {
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody @Valid Product product) {
         Optional<Product> optionalProduct = productDao.findById(id);
         if (optionalProduct.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
