@@ -17,5 +17,4 @@ public class State {
     @Column(nullable = false)
     protected String name;
 
-
 }
