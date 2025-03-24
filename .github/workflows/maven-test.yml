@@ -2,14 +2,12 @@
 # For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#apache-maven-with-a-settings-path
 
 name: Maven Package
+run-name: Job started by ${{github.actor}}
 
-on:
-  release:
-    types: [ created ]
+on: [ push ]
 
 jobs:
-  build:
-
+  Maven-test:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -25,5 +23,5 @@ jobs:
           server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
           settings-path: ${{ github.workspace }} # location for the settings.xml file
 
-      - name: Build with Maven
+      - name: Test with Maven
         run: mvn -B test --file pom.xml
