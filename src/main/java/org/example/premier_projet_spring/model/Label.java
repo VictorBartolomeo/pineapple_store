@@ -20,4 +20,7 @@ public class Label {
     @JsonView(PurchaseView.class)
     protected String name;
 
+    @Column(nullable = false)
+    protected String color;
+
 }
