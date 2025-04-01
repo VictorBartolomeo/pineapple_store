@@ -3,6 +3,7 @@ package org.example.premier_projet_spring.controller;
 import jakarta.validation.Valid;
 import org.example.premier_projet_spring.dao.ProductDao;
 import org.example.premier_projet_spring.model.Product;
+import org.example.premier_projet_spring.model.State;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +44,14 @@ public class ProductController {
 
     @PostMapping("/product")
     public ResponseEntity<Product> createProduct(@RequestBody @Valid Product product) {
+
+        //si le produit n'a pas d'état il sera alors considéré comme neuf
+        if (product.getState() == null) {
+            State stateNew = new State();
+            stateNew.setId(1L);
+            product.setState(stateNew);
+        }
+        product.setId(null);
         productDao.save(product);
         return new ResponseEntity<>(product, HttpStatus.CREATED);
     }
