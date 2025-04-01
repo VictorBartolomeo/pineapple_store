@@ -7,27 +7,27 @@ VALUES ('New (Freshly Picked)'),
        ('Damaged (Slightly Bruised)');
 
 -- Insérer les étiquettes (labels)
-INSERT INTO label (name)
-VALUES ('Pineapple Deals'),
-       ('Tropical Holidays'),
-       ('Winter Sun Specials'),
-       ('Pineapple Friday'),
-       ('Golden Harvest'),
-       ('Back to the Grove'),
-       ('Pineapple Essentials'),
-       ('Limited Edition');
+INSERT INTO label (name, color)
+VALUES ('Pineapple Deals', 'rgba(255,0,0,0.30)'),
+       ('Tropical Holidays', 'rgba(0,128,0,0.30)'),
+       ('Winter Sun Specials', 'rgba(0,0,255,0.30)'),
+       ('Pineapple Friday', 'rgba(255,0,0,0.30)'),
+       ('Golden Harvest', 'rgba(255,165,0,0.30)'),
+       ('Back to the Grove', 'rgba(128,0,128,0.30)'),
+       ('Pineapple Essentials', 'rgba(255,192,203,0.30)'),
+       ('Limited Edition', 'rgba(128,128,128,0.30)');
 
 -- Insérer les produits (products)
 INSERT INTO product (name, code, description, price, state_id)
 VALUES ('PineApple Watch SE', 'PAWSE00001', 'Features at a great price.', 299.99, 1),
        ('PinePhone 15', 'PAP1500002', 'Big features. Big value.', 999.99, 2),
        ('PinePad 10.2-inch', 'PAP1000003', 'Versatility at your fingertips.', 449.99, 3),
-       ('PinePad Pro 12.9-inch', 'PAPPM12004', 'The ultimate PinePad experience.', 1799.99, 1),
+       ('PinePad Pro 12.9-inch', 'PAPPM12004', 'The ultimate PinePad experience.', 1799.99, 5),
        ('PinePods', 'PAPOD00005', 'Wireless earbuds. Simply magical.', 159.99, 4),
        ('PineBook', 'PABOK00006', 'Our most popular laptop. Now even more powerful.', 899.99, 2),
        ('PineVision', 'PAVIS00007', 'Transform the way you see and interact with content.', 2999.99, 1),
        ('PineApple Watch Ultra 2', 'PAWU200008', 'Further. Beyond.', 899.99, 1),
-       ('PinePhone 15 Pro Max', 'PAP15PM009', 'The best PinePhone ever.', 1299.99, 2),
+       ('PinePhone 15 Pro Max', 'PAP15PM009', 'The best PinePhone ever.', 1299.99, 5),
        ('PinePad mini', 'PAPMI00010', 'Mega power. Mini size.', 649.99, 1),
        ('PinePods Max', 'PAPMAX0011', 'Effortless Pineapple listening.', 549.99, 3),
        ('PineBook Pro 14', 'PABP140012', 'Supercharged by Pineapple M3 Pro.', 1999.99, 1),
