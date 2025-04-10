@@ -6,11 +6,11 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
-import org.example.premier_projet_spring.security.Role;
 
 @Getter
 @Setter
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
 
     @Id
@@ -26,9 +26,9 @@ public class User {
     @Column(nullable = false)
     protected String password;
 
-    @Enumerated
-    @Column(columnDefinition = "ENUM('USER', 'EDITOR', 'ADMINISTRATOR')")
-    protected Role role;
+//    @Enumerated
+//    @Column(columnDefinition = "ENUM('USER', 'EDITOR', 'ADMINISTRATOR')")
+//    protected Role role;
 
 
 }
