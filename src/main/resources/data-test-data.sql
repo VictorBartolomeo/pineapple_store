@@ -1,3 +1,8 @@
+-- Inserer des utilisateurs (user)
+INSERT INTO user (email, password, is_admin)
+VALUES ('a@a.com', '$2a$10$1vDZ9Kv47brekbaDy1rXNeOvtobg38CoQBtCDtfwPYJNAOoVkDBdK', true),
+       ('b@b.com', '$2a$10$1vDZ9Kv47brekbaDy1rXNeOvtobg38CoQBtCDtfwPYJNAOoVkDBdK', false);
+
 -- Insérer les états (states)
 INSERT INTO state (name)
 VALUES ('New (Freshly Picked)'),
