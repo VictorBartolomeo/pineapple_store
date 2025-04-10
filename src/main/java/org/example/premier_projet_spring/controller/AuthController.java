@@ -37,7 +37,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody @Valid User user) {
-        user.setAdmin(false);
+//        user.setRole(Role.USER);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.save(user);
         //Masque le mot de passe dans la réponse

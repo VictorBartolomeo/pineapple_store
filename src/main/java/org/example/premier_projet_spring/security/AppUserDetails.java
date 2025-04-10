@@ -1,5 +1,7 @@
 package org.example.premier_projet_spring.security;
 
+import org.example.premier_projet_spring.model.Client;
+import org.example.premier_projet_spring.model.Seller;
 import org.example.premier_projet_spring.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,8 +20,18 @@ public class AppUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(
-                "ROLE_" + user.getRole().name()));
+
+        boolean isClient = user instanceof Client;
+
+        if (isClient) {
+
+            return List.of(new SimpleGrantedAuthority(isClient ? "ROLE_CLIENT" : "ROLE_SELLER"));
+
+        }
+        else {
+            Seller seller = (Seller) user;
+            return List.of(new SimpleGrantedAuthority("ROLE_" + (seller.isChief() ? "CHIEF" : "SELLER")));
+        }
     }
 
     @Override
