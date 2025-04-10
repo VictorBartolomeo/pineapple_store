@@ -4,8 +4,8 @@ import jakarta.validation.Valid;
 import org.example.premier_projet_spring.dao.ProductDao;
 import org.example.premier_projet_spring.model.Product;
 import org.example.premier_projet_spring.model.State;
-import org.example.premier_projet_spring.security.IsAdmin;
-import org.example.premier_projet_spring.security.IsUser;
+import org.example.premier_projet_spring.security.IsClient;
+import org.example.premier_projet_spring.security.IsSeller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +27,7 @@ public class ProductController {
 
     @GetMapping("/product/{id}")
 
-    @IsAdmin
+    @IsClient
     public ResponseEntity<Product> getProduct(@PathVariable Long id) {
 
         Optional<Product> optionalProduct = productDao.findById(id);
@@ -39,12 +39,14 @@ public class ProductController {
 
 
     @GetMapping("/products")
-    @IsUser
+    @IsSeller
     public List<Product> getAll() {
         return productDao.findAll();
     }
 
     @PostMapping("/product")
+
+
     public ResponseEntity<Product> createProduct(@RequestBody @Valid Product product) {
 
         //si le produit n'a pas d'état il sera alors considéré comme neuf
@@ -59,6 +61,7 @@ public class ProductController {
     }
 
     @DeleteMapping("product/{id}")
+    @IsClient
     public ResponseEntity<Product> deleteProduct(@PathVariable Long id) {
 
         Optional<Product> optionalProduct = productDao.findById(id);
