@@ -4,6 +4,8 @@ import jakarta.validation.Valid;
 import org.example.premier_projet_spring.dao.ProductDao;
 import org.example.premier_projet_spring.model.Product;
 import org.example.premier_projet_spring.model.State;
+import org.example.premier_projet_spring.security.IsAdmin;
+import org.example.premier_projet_spring.security.IsUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,19 +27,19 @@ public class ProductController {
 
     @GetMapping("/product/{id}")
 
+    @IsAdmin
     public ResponseEntity<Product> getProduct(@PathVariable Long id) {
 
         Optional<Product> optionalProduct = productDao.findById(id);
         if (optionalProduct.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
         return new ResponseEntity<>(optionalProduct.get(), HttpStatus.OK);
-
     }
 
 
     @GetMapping("/products")
+    @IsUser
     public List<Product> getAll() {
         return productDao.findAll();
     }
