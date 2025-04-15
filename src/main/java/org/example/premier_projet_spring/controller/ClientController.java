@@ -3,7 +3,6 @@ package org.example.premier_projet_spring.controller;
 import jakarta.validation.Valid;
 import org.example.premier_projet_spring.dao.ClientDao;
 import org.example.premier_projet_spring.model.Client;
-import org.example.premier_projet_spring.security.IsAdmin;
 import org.example.premier_projet_spring.security.IsClient;
 import org.example.premier_projet_spring.security.IsSeller;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,6 @@ public class ClientController {
 
     @GetMapping("/client/{id}")
 
-    @IsAdmin
     public ResponseEntity<Client> getClient(@PathVariable Long id) {
 
         Optional<Client> optionalClient = clientDao.findById(id);
@@ -46,7 +44,7 @@ public class ClientController {
 
     @PostMapping("/client")
     public ResponseEntity<Client> createClient(@RequestBody @Valid Client client) {
-        
+
         client.setId(null);
         clientDao.save(client);
         return new ResponseEntity<>(client, HttpStatus.CREATED);
