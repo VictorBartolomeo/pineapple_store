@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import org.example.premier_projet_spring.dao.UserDao;
 import org.example.premier_projet_spring.model.User;
 import org.example.premier_projet_spring.security.AppUserDetails;
-import org.example.premier_projet_spring.security.JwtUtils;
+import org.example.premier_projet_spring.security.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,14 +24,14 @@ public class AuthController {
     protected UserDao userDao;
     protected PasswordEncoder passwordEncoder;
     protected AuthenticationProvider authenticationProvider;
-    protected JwtUtils jwtUtils;
+    protected SecurityUtils securityUtils;
 
     @Autowired
-    public AuthController(UserDao userDao, PasswordEncoder passwordEncoder, AuthenticationProvider authenticationProvider, JwtUtils jwtUtils) {
+    public AuthController(UserDao userDao, PasswordEncoder passwordEncoder, AuthenticationProvider authenticationProvider, SecurityUtils securityUtils) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
         this.authenticationProvider = authenticationProvider;
-        this.jwtUtils = jwtUtils;
+        this.securityUtils = securityUtils;
     }
 
 
@@ -53,7 +53,7 @@ public class AuthController {
                                     user.getEmail(),
                                     user.getPassword()))
                     .getPrincipal();
-            return new ResponseEntity<>(jwtUtils.generateToken(userDetails), HttpStatus.OK);
+            return new ResponseEntity<>(securityUtils.generateToken(userDetails), HttpStatus.OK);
 
         } catch (AuthenticationException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
