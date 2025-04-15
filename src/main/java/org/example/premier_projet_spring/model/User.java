@@ -26,9 +26,4 @@ public class User {
     @Column(nullable = false)
     protected String password;
 
-//    @Enumerated
-//    @Column(columnDefinition = "ENUM('USER', 'EDITOR', 'ADMINISTRATOR')")
-//    protected Role role;
-
-
 }
