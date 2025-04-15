@@ -2,6 +2,7 @@ package org.example.premier_projet_spring.controller;
 
 import org.example.premier_projet_spring.dao.StateDao;
 import org.example.premier_projet_spring.model.State;
+import org.example.premier_projet_spring.security.IsSeller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,11 +37,13 @@ public class StateController {
 
 
     @GetMapping("/states")
+    @IsSeller
     public List<State> getAll() {
         return stateDao.findAll();
     }
 
     @PostMapping("/state")
+    @IsSeller
     public ResponseEntity<State> createState(@RequestBody State state) {
         stateDao.save(state);
         return new ResponseEntity<>(state, HttpStatus.CREATED);
