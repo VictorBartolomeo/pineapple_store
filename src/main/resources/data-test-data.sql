@@ -34,23 +34,23 @@ VALUES ('Pineapple Deals', 'rgba(255,0,0,0.30)'),
        ('Limited Edition', 'rgba(128,128,128,0.30)');
 
 -- Insérer les produits (products)
-INSERT INTO product (name, code, description, price, state_id)
-VALUES ('PineApple Watch SE', 'PAWSE00001', 'Features at a great price.', 299.99, 1),
-       ('PinePhone 15', 'PAP1500002', 'Big features. Big value.', 999.99, 2),
-       ('PinePad 10.2-inch', 'PAP1000003', 'Versatility at your fingertips.', 449.99, 3),
-       ('PinePad Pro 12.9-inch', 'PAPPM12004', 'The ultimate PinePad experience.', 1799.99, 5),
-       ('PinePods', 'PAPOD00005', 'Wireless earbuds. Simply magical.', 159.99, 4),
-       ('PineBook', 'PABOK00006', 'Our most popular laptop. Now even more powerful.', 899.99, 2),
-       ('PineVision', 'PAVIS00007', 'Transform the way you see and interact with content.', 2999.99, 1),
-       ('PineApple Watch Ultra 2', 'PAWU200008', 'Further. Beyond.', 899.99, 1),
-       ('PinePhone 15 Pro Max', 'PAP15PM009', 'The best PinePhone ever.', 1299.99, 5),
-       ('PinePad mini', 'PAPMI00010', 'Mega power. Mini size.', 649.99, 1),
-       ('PinePods Max', 'PAPMAX0011', 'Effortless Pineapple listening.', 549.99, 3),
-       ('PineBook Pro 14', 'PABP140012', 'Supercharged by Pineapple M3 Pro.', 1999.99, 1),
-       ('PineBook Pro 16', 'PABP160013', 'Supercharged by Pineapple M3 Max.', 2499.99, 1),
-       ('PineStudio Display', 'PASDISP014', 'Beauty in sight. Sound to match.', 1599.99, 1),
-       ('PinePencil (2nd generation)', 'PAPC200015', 'Dream it. Jot it. Draw it.', 129.99, 1),
-       ('PineMagic Keyboard', 'PAMKEYB016', 'A fantastic typing experience.', 299.99, 1);
+INSERT INTO product (name, code, description, price, state_id, creator_id)
+VALUES ('PineApple Watch SE', 'PAWSE00001', 'Features at a great price.', 299.99, 1, 1),
+       ('PinePhone 15', 'PAP1500002', 'Big features. Big value.', 999.99, 2, 1),
+       ('PinePad 10.2-inch', 'PAP1000003', 'Versatility at your fingertips.', 449.99, 3, 1),
+       ('PinePad Pro 12.9-inch', 'PAPPM12004', 'The ultimate PinePad experience.', 1799.99, 5, 1),
+       ('PinePods', 'PAPOD00005', 'Wireless earbuds. Simply magical.', 159.99, 4, 1),
+       ('PineBook', 'PABOK00006', 'Our most popular laptop. Now even more powerful.', 899.99, 2, 1),
+       ('PineVision', 'PAVIS00007', 'Transform the way you see and interact with content.', 2999.99, 1, 1),
+       ('PineApple Watch Ultra 2', 'PAWU200008', 'Further. Beyond.', 899.99, 1, 1),
+       ('PinePhone 15 Pro Max', 'PAP15PM009', 'The best PinePhone ever.', 1299.99, 5, 3),
+       ('PinePad mini', 'PAPMI00010', 'Mega power. Mini size.', 649.99, 1, 3),
+       ('PinePods Max', 'PAPMAX0011', 'Effortless Pineapple listening.', 549.99, 3, 3),
+       ('PineBook Pro 14', 'PABP140012', 'Supercharged by Pineapple M3 Pro.', 1999.99, 1, 3),
+       ('PineBook Pro 16', 'PABP160013', 'Supercharged by Pineapple M3 Max.', 2499.99, 1, 1),
+       ('PineStudio Display', 'PASDISP014', 'Beauty in sight. Sound to match.', 1599.99, 1, 3),
+       ('PinePencil (2nd generation)', 'PAPC200015', 'Dream it. Jot it. Draw it.', 129.99, 1, 3),
+       ('PineMagic Keyboard', 'PAMKEYB016', 'A fantastic typing experience.', 299.99, 1, 1);
 
 -- Associer les produits aux étiquettes (product_label)
 INSERT INTO product_label(product_id, label_id)
