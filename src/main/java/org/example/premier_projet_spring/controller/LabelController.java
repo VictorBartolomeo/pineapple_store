@@ -2,6 +2,7 @@ package org.example.premier_projet_spring.controller;
 
 import org.example.premier_projet_spring.dao.LabelDao;
 import org.example.premier_projet_spring.model.Label;
+import org.example.premier_projet_spring.security.IsSeller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,11 +37,13 @@ public class LabelController {
 
 
     @GetMapping("/labels")
+    @IsSeller
     public List<Label> getAll() {
         return labelDao.findAll();
     }
 
     @PostMapping("/label")
+    @IsSeller
     public ResponseEntity<Label> createLabel(@RequestBody Label label) {
         labelDao.save(label);
         return new ResponseEntity<>(label, HttpStatus.CREATED);
