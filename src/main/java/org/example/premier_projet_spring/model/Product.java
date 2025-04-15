@@ -52,5 +52,9 @@ public class Product {
     @JsonView(PurchaseView.class)
     protected List<Label> labels = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    Seller creator;
+
 
 }
