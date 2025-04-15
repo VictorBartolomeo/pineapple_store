@@ -1,5 +1,6 @@
 package org.example.premier_projet_spring.security;
 
+import lombok.Getter;
 import org.example.premier_projet_spring.model.Client;
 import org.example.premier_projet_spring.model.Seller;
 import org.example.premier_projet_spring.model.User;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+@Getter
 public class AppUserDetails implements UserDetails {
 
     protected User user;
