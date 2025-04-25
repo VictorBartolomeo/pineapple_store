@@ -2,13 +2,15 @@
 INSERT INTO user (email, password)
 VALUES ('a@a.com', '$2a$10$1vDZ9Kv47brekbaDy1rXNeOvtobg38CoQBtCDtfwPYJNAOoVkDBdK'),
        ('b@b.com', '$2a$10$1vDZ9Kv47brekbaDy1rXNeOvtobg38CoQBtCDtfwPYJNAOoVkDBdK'),
-       ('c@c.com', '$2a$10$1vDZ9Kv47brekbaDy1rXNeOvtobg38CoQBtCDtfwPYJNAOoVkDBdK');
+       ('c@c.com', '$2a$10$1vDZ9Kv47brekbaDy1rXNeOvtobg38CoQBtCDtfwPYJNAOoVkDBdK'),
+       ('d@d.com', '$2a$10$1vDZ9Kv47brekbaDy1rXNeOvtobg38CoQBtCDtfwPYJNAOoVkDBdK');
 
 -- Inserer des vendeurs
 
 INSERT INTO seller(id, salary, chief)
 VALUES (1, 2000, false),
-       (3, 3000, true);
+       (3, 3000, true),
+       (4, 3000, false);
 
 -- Inserer des clients
 INSERT INTO client(id, client_number)
