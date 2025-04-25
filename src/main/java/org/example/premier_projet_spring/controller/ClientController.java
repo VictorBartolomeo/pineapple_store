@@ -1,10 +1,12 @@
 package org.example.premier_projet_spring.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.validation.Valid;
 import org.example.premier_projet_spring.dao.ClientDao;
 import org.example.premier_projet_spring.model.Client;
 import org.example.premier_projet_spring.security.IsClient;
 import org.example.premier_projet_spring.security.IsSeller;
+import org.example.premier_projet_spring.view.ClientView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +27,7 @@ public class ClientController {
     }
 
     @GetMapping("/client/{id}")
-
+    @JsonView(ClientView.class)
     public ResponseEntity<Client> getClient(@PathVariable Long id) {
 
         Optional<Client> optionalClient = clientDao.findById(id);
@@ -37,12 +39,14 @@ public class ClientController {
 
 
     @GetMapping("/clients")
+    @JsonView(ClientView.class)
     @IsSeller
     public List<Client> getAll() {
         return clientDao.findAll();
     }
 
     @PostMapping("/client")
+    @JsonView(ClientView.class)
     public ResponseEntity<Client> createClient(@RequestBody @Valid Client client) {
 
         client.setId(null);
