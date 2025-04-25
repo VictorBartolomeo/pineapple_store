@@ -23,6 +23,7 @@ public class Product {
     protected Long id;
 
     @Column(nullable = false)
+    @NotBlank
     @JsonView(PurchaseView.class)
     protected String name;
 
