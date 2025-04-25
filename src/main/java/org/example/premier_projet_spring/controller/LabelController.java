@@ -2,6 +2,7 @@ package org.example.premier_projet_spring.controller;
 
 import org.example.premier_projet_spring.dao.LabelDao;
 import org.example.premier_projet_spring.model.Label;
+import org.example.premier_projet_spring.security.IsClient;
 import org.example.premier_projet_spring.security.IsSeller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +38,7 @@ public class LabelController {
 
 
     @GetMapping("/labels")
-    @IsSeller
+    @IsClient
     public List<Label> getAll() {
         return labelDao.findAll();
     }
