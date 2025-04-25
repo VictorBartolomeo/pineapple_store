@@ -6,9 +6,9 @@ import org.example.premier_projet_spring.model.Product;
 import org.example.premier_projet_spring.model.Seller;
 import org.example.premier_projet_spring.model.State;
 import org.example.premier_projet_spring.security.AppUserDetails;
+import org.example.premier_projet_spring.security.ISecurityUtils;
 import org.example.premier_projet_spring.security.IsClient;
 import org.example.premier_projet_spring.security.IsSeller;
-import org.example.premier_projet_spring.security.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +23,10 @@ import java.util.Optional;
 public class ProductController {
 
     protected ProductDao productDao;
-    protected SecurityUtils securityUtils;
+    protected ISecurityUtils securityUtils;
 
     @Autowired
-    public ProductController(ProductDao productDao, SecurityUtils securityUtils) {
+    public ProductController(ProductDao productDao, ISecurityUtils securityUtils) {
         this.productDao = productDao;
         this.securityUtils = securityUtils;
     }
@@ -79,7 +79,7 @@ public class ProductController {
 
         String role = securityUtils.getRole(userDetails);
 
-        if (!role.equals("ROLE_CHIEF") || !optionalProduct.get().getCreator().equals(userDetails.getUser())) {
+        if (!role.equals("ROLE_CHIEF") && optionalProduct.get().getCreator().equals(userDetails.getUser())) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 

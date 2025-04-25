@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import org.example.premier_projet_spring.dao.UserDao;
 import org.example.premier_projet_spring.model.User;
 import org.example.premier_projet_spring.security.AppUserDetails;
+import org.example.premier_projet_spring.security.ISecurityUtils;
 import org.example.premier_projet_spring.security.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ public class AuthController {
     protected UserDao userDao;
     protected PasswordEncoder passwordEncoder;
     protected AuthenticationProvider authenticationProvider;
-    protected SecurityUtils securityUtils;
+    protected ISecurityUtils securityUtils;
 
     @Autowired
     public AuthController(UserDao userDao, PasswordEncoder passwordEncoder, AuthenticationProvider authenticationProvider, SecurityUtils securityUtils) {
