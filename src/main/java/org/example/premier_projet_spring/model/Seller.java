@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
-import org.example.premier_projet_spring.view.ClientView;
+import org.example.premier_projet_spring.view.ProductViewSeller;
 
 @Getter
 @Setter
@@ -13,9 +13,10 @@ import org.example.premier_projet_spring.view.ClientView;
 
 public class Seller extends User {
 
-    @JsonView(ClientView.class)
+    @JsonView({ProductViewSeller.class})
     protected int salary;
 
+    @JsonView({ProductViewSeller.class})
     boolean chief = false;
 
 }
