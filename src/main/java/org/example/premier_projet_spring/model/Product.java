@@ -64,5 +64,8 @@ public class Product {
     @JsonView({ProductViewSeller.class})
     Seller creator;
 
+    @JsonView({ProductViewClient.class})
+    String pictureName;
+
 
 }

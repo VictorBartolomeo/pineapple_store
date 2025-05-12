@@ -2,6 +2,7 @@ package org.example.premier_projet_spring.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.validation.Valid;
+import org.example.premier_projet_spring.annotation.ValidFile;
 import org.example.premier_projet_spring.dao.ProductDao;
 import org.example.premier_projet_spring.model.Product;
 import org.example.premier_projet_spring.model.Seller;
@@ -13,16 +14,23 @@ import org.example.premier_projet_spring.security.IsSeller;
 import org.example.premier_projet_spring.service.FileService;
 import org.example.premier_projet_spring.view.ProductViewClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
+import java.nio.file.Files;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @CrossOrigin
 @RestController
@@ -36,7 +44,7 @@ public class ProductController {
     public ProductController(ProductDao productDao, ISecurityUtils securityUtils, FileService fileService) {
         this.productDao = productDao;
         this.securityUtils = securityUtils;
-        this.fileService = new FileService();
+        this.fileService = fileService;
     }
 
     @GetMapping("/product/{id}")
@@ -59,10 +67,40 @@ public class ProductController {
         return productDao.findAll();
     }
 
+    @GetMapping("/product/picture/{id}")
+    @IsClient
+    public ResponseEntity<byte[]> getImageProduit(@PathVariable Long id) {
+
+        Optional<Product> optional = productDao.findById(id);
+
+        if (optional.isPresent()) {
+
+            String nomImage = optional.get().getPictureName();
+
+            try {
+                byte[] image = fileService.getImageByName(nomImage);
+
+                HttpHeaders enTete = new HttpHeaders();
+                String mimeType = Files.probeContentType(new File(nomImage).toPath());
+                enTete.setContentType(MediaType.valueOf(mimeType));
+
+                return new ResponseEntity<>(image, enTete, HttpStatus.OK);
+
+            } catch (FileNotFoundException e) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            } catch (IOException e) {
+                System.out.println("Le test du mimetype a echoué");
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @PostMapping("/product")
     @IsSeller
     public ResponseEntity<Product> createProduct(@RequestPart("product") @Valid Product product,
-                                                 @RequestPart(value = "picture", required = false) MultipartFile picture,
+                                                 @RequestPart(value = "picture", required = false) @ValidFile(acceptedTypes = {"image.jpeg", "image/png", "image/gif"}) MultipartFile picture,
                                                  @AuthenticationPrincipal AppUserDetails userDetails) {
 
 
@@ -75,17 +113,23 @@ public class ProductController {
             product.setState(stateNew);
         }
         product.setId(null);
-        productDao.save(product);
+
 
         if (picture != null && !picture.isEmpty()) {
             try {
-                fileService.uploadToLocalFileSystem((InputStream) picture, "toto.jpg");
+                String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss"));
+                String pictureName = date + "_" + product.getId() + "_" + UUID.randomUUID() + "_" + picture.getOriginalFilename();
+
+                fileService.uploadToLocalFileSystem(picture, pictureName, false);
+
+                product.setPictureName(pictureName);
+
             } catch (IOException e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
-
+        productDao.save(product);
         product.setCreator(null);
         return new ResponseEntity<>(product, HttpStatus.CREATED);
     }
