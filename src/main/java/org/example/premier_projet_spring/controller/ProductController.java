@@ -10,13 +10,17 @@ import org.example.premier_projet_spring.security.AppUserDetails;
 import org.example.premier_projet_spring.security.ISecurityUtils;
 import org.example.premier_projet_spring.security.IsClient;
 import org.example.premier_projet_spring.security.IsSeller;
+import org.example.premier_projet_spring.service.FileService;
 import org.example.premier_projet_spring.view.ProductViewClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,11 +30,13 @@ public class ProductController {
 
     protected ProductDao productDao;
     protected ISecurityUtils securityUtils;
+    protected FileService fileService;
 
     @Autowired
-    public ProductController(ProductDao productDao, ISecurityUtils securityUtils) {
+    public ProductController(ProductDao productDao, ISecurityUtils securityUtils, FileService fileService) {
         this.productDao = productDao;
         this.securityUtils = securityUtils;
+        this.fileService = new FileService();
     }
 
     @GetMapping("/product/{id}")
@@ -55,7 +61,9 @@ public class ProductController {
 
     @PostMapping("/product")
     @IsSeller
-    public ResponseEntity<Product> createProduct(@RequestBody @Valid Product product, @AuthenticationPrincipal AppUserDetails userDetails) {
+    public ResponseEntity<Product> createProduct(@RequestPart("product") @Valid Product product,
+                                                 @RequestPart(value = "picture", required = false) MultipartFile picture,
+                                                 @AuthenticationPrincipal AppUserDetails userDetails) {
 
 
         product.setCreator((Seller) userDetails.getUser());
@@ -68,6 +76,17 @@ public class ProductController {
         }
         product.setId(null);
         productDao.save(product);
+
+        if (picture != null && !picture.isEmpty()) {
+            try {
+                fileService.uploadToLocalFileSystem((InputStream) picture, "toto.jpg");
+            } catch (IOException e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+
+
+        product.setCreator(null);
         return new ResponseEntity<>(product, HttpStatus.CREATED);
     }
 
