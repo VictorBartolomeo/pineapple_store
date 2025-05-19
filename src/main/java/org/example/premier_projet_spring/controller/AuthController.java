@@ -78,12 +78,12 @@ public class AuthController {
 
     }
 
-    @PostMapping("/validate-mail")
+    @PostMapping("/validate-email")
     public ResponseEntity<User> validateEmail(@RequestBody EmailValidationDto emailValidationDto) {
 
-        Optional<User> user = userDao.findByEmail(emailValidationDto.getEmail());
+        Optional<User> user = userDao.findByValidEmailToken(emailValidationDto.getToken());
 
-        if (user.get().getValidEmailToken().equals(emailValidationDto.getToken())) {
+        if (user.isPresent()) {
             user.get().setValidEmailToken(null);
             userDao.save(user.get());
             return new ResponseEntity<>(user.get(), HttpStatus.OK);
