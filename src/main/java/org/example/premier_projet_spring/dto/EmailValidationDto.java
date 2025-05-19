@@ -9,5 +9,6 @@ public class EmailValidationDto {
 
     protected String token;
     protected String email;
+    protected boolean CGU;
 //    protected String password;
 }
