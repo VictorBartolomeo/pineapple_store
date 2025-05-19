@@ -45,4 +45,9 @@ public class AppUserDetails implements UserDetails {
     public String getUsername() {
         return user.getEmail();
     }
+
+    @Override
+    public boolean isEnabled() {
+        return user.getValidEmailToken() == null;
+    }
 }

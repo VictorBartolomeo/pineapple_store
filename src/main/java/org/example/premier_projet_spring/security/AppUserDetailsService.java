@@ -27,9 +27,7 @@ public class AppUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-
         Optional<Client> optionalClient = clientDao.findByEmail(email);
-
 
         if (optionalClient.isEmpty()) {
             Optional<Seller> optionalSeller = sellerDao.findByEmail(email);
