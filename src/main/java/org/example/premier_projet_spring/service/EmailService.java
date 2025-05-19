@@ -181,11 +181,11 @@ public class EmailService {
                     "                <p>Pour finaliser votre inscription et accéder à tous nos services exclusifs, veuillez cliquer sur le bouton ci-dessous :</p>\n" +
                     "            </div>\n" +
                     "            <div style=\"text-align: center;\">\n" +
-                    "                <a href=\"http://localhost:8080/validate-email/" + token + "\" class=\"button\">✨ Valider mon compte ✨</a>\n" +
+                    "                <a href=\"http://localhost:4200/validate-email/" + token + "\" class=\"button\">✨ Valider mon compte ✨</a>\n" +
                     "            </div>\n" +
                     "            <p>Ce lien est valable pour <span id=\"countdown\">24 heures</span>.</p>\n" +
                     "            <p>Si le bouton ne fonctionne pas, vous pouvez copier et coller le lien suivant dans votre navigateur :</p>\n" +
-                    "            <p><a href=\"http://localhost:8080/validate-email/" + token + "\" class=\"animated-link\">http://localhost:8080/validate?token=" + token + "</a></p>\n" +
+                    "            <p><a href=\"http://localhost:4200/validate-email/" + token + "\" class=\"animated-link\">http://localhost:4200/validate?token=" + token + "</a></p>\n" +
                     "        </div>\n" +
                     "        <div class=\"footer\">\n" +
                     "            <p>🍍 © " + currentYear + " PineApple Store - Tous droits réservés 🍍</p>\n" +
